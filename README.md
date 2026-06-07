@@ -44,6 +44,7 @@ npm install
 ```bash
 node initializeDatabase.js
 ```
+### Start the Server
 
 ```bash
 node server.js
