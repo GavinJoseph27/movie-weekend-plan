@@ -1,4 +1,4 @@
-# Movie Weekend Planner – Assignment 4
+# Movie Weekend Planner
 
 A full-stack web application that allows users to browse movies across multiple streaming services, place rental orders, view order statistics, and manage their accounts. Built with Node.js, Express, MongoDB, and the PUG template engine.
 
