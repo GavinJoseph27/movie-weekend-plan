@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+    link(rel="stylesheet" href="/styles/home.css")
+  body
+    include header.pug
+    img(src="/images/home.jpeg" alt="Movies Banner" class="banner")
+    div.welcome-section
+      if user
+        h2 Welcome #{user.username}!
+      else
+        h2 Welcome to the Weekend Movie Planner!
+      p Your one-stop destination for planning the perfect movie weekend. Browse films across your favourite streaming services, pick your genres, and build your ultimate watchlist.
+      if user
+        a(href="/order" class="btn") Start Planning

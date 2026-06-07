@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Streaming Services
+    link(rel="stylesheet" href="/styles/Style.css")
+    script(src="/scripts/Script.js" defer)
+  body
+    include header.pug
+    div.content-wrapper
+      form#buttons
+        h2 Pick your streaming service!
+        div.form-row
+          select#features(name="features")
+            option(value="" selected disabled)
+          button(type="submit") Submit
+        p#para
+        nav#para2
+        table#content-columns
+          thead
+            tr
+              th Movies
+              th Current Order
+          tbody
+            tr
+              td#movies-cell
+              td#order-cell
+    script.
+      // Inject basic service data from server and populate dropdown
+      const streamingServices = !{JSON.stringify(services)};

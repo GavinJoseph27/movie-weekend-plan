@@ -1,0 +1,403 @@
+/* ─────────────────────────────────────────
+   HEADER & NAVIGATION
+───────────────────────────────────────── */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; 
+    padding: 10px 20px;
+    background-color: rgb(30, 2, 40); /* Dark background */
+    color: rgb(248, 220, 9);
+}
+
+
+header .logo {    
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    margin: 0 auto;
+}
+
+header nav {
+    position: absolute;
+    right: 20px; /* same as header padding */
+    top: 50%;
+    transform: translateY(-50%); /* vertically center the nav */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li a {
+    color: rgb(248, 220, 9);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a.active {
+    text-decoration: underline;
+    color: rgb(192, 85, 241); /* Highlight active page */
+}
+
+/* ─────────────────────────────────────────
+   PAGE BACKGROUND & BODY
+───────────────────────────────────────── */
+body {
+    background-color: rgb(15, 15, 15);
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-position: center;
+    min-height: 100vh;
+} 
+
+/* ─────────────────────────────────────────
+   ORDER FORM - SERVICE INFO PANELS
+───────────────────────────────────────── */
+
+/* Selected Service Info Box */
+#para {
+    display: none; /* Hidden until a service is selected */
+    margin: 4px auto;
+    padding: 10px 30px;
+    width: fit-content; /* Shrinks to content width */
+    border-radius: 10px;
+    font-weight: bold;
+    background-color:rgba(30, 2, 40, 0.555);
+    position: relative;
+    text-align: center;
+    color: rgb(192, 85, 241);
+}
+
+/* Genre navigation panel */
+#para2 {
+    display: none;
+    gap: 15px; 
+    margin: 4px auto;
+    padding: 10px 30px;
+    width: fit-content;
+    border-radius: 10px;
+    background-color:rgba(30, 2, 40, 0.555);
+    position: relative;
+    text-align: center;
+    left: 7%;
+    transform: translateX(-25%);
+    color: rgb(192, 85, 241);
+}
+
+/* ─────────────────────────────────────────
+   LAYOUT & WRAPPERS
+───────────────────────────────────────── */
+
+/* Form Layout */
+.form-row {
+    padding: 10px 10px;
+    gap: 10px;
+}
+
+/* Main Content Wrapper */
+.content-wrapper {
+    display: inline-block;
+    text-align: center;
+    padding: 15px;
+    width: 100%;; 
+    margin: 0;
+    box-sizing: border-box;
+    background-color:rgba(103, 103, 101, 0.298);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Stats and profile page wrapper - centers cards vertically */
+.stats-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Individual stat/profile cards */
+.stats-card {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY & FORM CONTROLS
+───────────────────────────────────────── */
+
+/* Text & Form Controls */
+label {
+    color: rgb(192, 85, 241);
+}
+
+h2 {
+    color: rgb(180, 119, 237);
+    background-color: rgb(108, 7, 155);
+    width: fit-content;
+    margin: 0 auto;
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+select {
+    background-color: rgba(52, 1, 57, 0.532);
+    color: rgb(192, 85, 241);
+}
+
+/* ─────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────── */
+
+/* Genre Buttons */
+button {
+    display: inline-block;
+    background-color: rgba(52, 1, 57, 0.532);
+    color: rgb(192, 85, 241);
+}
+
+button.genre {
+    background-color: rgb(29, 29, 2);
+    color: rgb(255, 247, 16);
+}
+
+#subButton {
+    background-color: rgb(29, 29, 2);
+    color: rgb(255, 247, 16);
+}
+
+.genre {
+    border-radius: 6px;
+}
+
+.genre:hover {
+    background-color: rgb(136, 29, 136);
+    color: rgb(246, 76, 207);
+}
+
+/* Active/selected genre button */
+.genre.active {
+    background-color: rgb(136, 29, 136);
+    color: rgb(246, 76, 207);
+}
+
+.genre:focus {
+    outline: none;
+}
+
+/* ─────────────────────────────────────────
+   MOVIE & ORDER TABLE (ORDER FORM)
+───────────────────────────────────────── */
+
+/* Movie & Order Table */
+#content-columns {
+    width: 100%;
+    max-width: 800px; /* Limit table width */
+    margin: 20px auto;
+    border-collapse: collapse;
+    table-layout: fixed; /* Enforce column widths */
+    display: none; /* hidden until service selected */
+    color:rgb(253, 253, 253);
+}
+
+/* Table header styling */
+#content-columns thead th {
+    background-color: rgba(3, 3, 3, 0.8);
+    color: rgb(240, 248, 16);
+    font-size: 22px;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 3px solid rgb(254, 253, 254);
+}
+
+/* Table cell styling */
+#content-columns td {
+    vertical-align: top; /* Table cell styling */
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.92);
+}
+  
+/* Vertical divider between columns */
+#content-columns th:first-child,
+#content-columns td:first-child {
+  border-right: 2px solid rgb(252, 252, 252);
+}
+  
+/* Show table when active */
+#content-columns.show {
+    display: table;
+} 
+
+/* Column Widths */
+#content-columns th:first-child {
+    width: 60%; /* Movies column */
+}
+
+#content-columns th:last-child {
+    width: 40%; /* Order summary column */
+}
+
+/* ─────────────────────────────────────────
+   MOVIE ITEM CARDS
+───────────────────────────────────────── */
+
+.movie-item {
+    border-bottom: 1px solid #fffdfd;
+    padding: 12px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.movie-item:last-child {
+    border-bottom: none;
+}
+
+.movie-item h4 {
+    margin: 0;
+    font-size: 18px;
+    color: rgb(240, 248, 16);
+}
+
+.movie-item p {
+    margin: 0;
+    font-size: 14px;
+    color:rgb(252, 252, 252);
+}
+
+/* ─────────────────────────────────────────
+   ORDER SUMMARY (ORDER FORM)
+───────────────────────────────────────── */
+  
+/* Order Summary Styling */
+#order-cell h3{
+    color: rgb(254, 253, 253);
+}
+
+#order-cell span {
+    color: whitesmoke;
+    text-decoration: underline;
+}
+
+/* ─────────────────────────────────────────
+   SELECT / REMOVE ICONS
+───────────────────────────────────────── */
+
+/* Select / Remove Icons */
+.select-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+/* ─────────────────────────────────────────
+   SERVICE INFO PAGE
+───────────────────────────────────────── */
+  
+/* Service Info Page */
+.service-edit label,
+.genre-add label,
+.movie-add label {
+    color: white;
+}
+
+.service-edit h3,
+.genre-add h3,
+.movie-add h3 {
+    color: rgb(180, 119, 237);
+}
+
+#movies-section h3 {
+    color: rgb(180, 119, 237);
+}
+
+#movies-section table {
+    color: white;
+    margin: 0 auto;
+    width: 80%;
+}
+
+#movies-section th {
+    color: rgb(240, 248, 16);
+    background-color: rgba(3, 3, 3, 0.8);
+    padding: 10px;
+}
+
+#movies-section td {
+    color: white;
+    padding: 8px;
+}
+
+#services-list a {
+    color: rgb(192, 85, 241);
+}
+
+/* ─────────────────────────────────────────
+   FORMS - LOGIN, REGISTER, PROFILE
+───────────────────────────────────────── */
+
+.error-message {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ─────────────────────────────────────────
+   USER DIRECTORY PAGE
+───────────────────────────────────────── */
+
+/* Private users appear faded and non-clickable */
+.private-user {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.private-label {
+    color: gray;
+}
+
+.privacy-badge {
+    font-size: 0.8em;
+    color: gray;
+    font-style: italic;
+}
+
+/* ─────────────────────────────────────────
+   USER PROFILE - ORDER HISTORY
+───────────────────────────────────────── */
+
+/* Individual order block in order history */
+.order-block {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+/* Service name heading within an order */
+.order-block h4 {
+    margin-top: 10px;
+    font-size: 1em;
+    color: rgb(240, 248, 16);
+}
+
+/* Divider between orders */
+.order-block hr {
+    margin-top: 15px;
+    border: none;
+    border-top: 1px solid #ddd;
+}

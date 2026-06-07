@@ -1,0 +1,29 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Weekend Movie Planner - Login
+    link(rel="stylesheet" href="/styles/Style.css")
+    link(rel="stylesheet" href="/styles/home.css")
+  body
+    include header.pug
+
+    div.welcome-section
+      h2 Sign In
+      
+      if error
+        p.error-message= error
+
+      form(action="/login" method="POST")
+        div.form-group
+          label(for="username") Username
+          input(type="text" id="username" name="username" required)
+        
+        div.form-group
+          label(for="password") Password
+          input(type="password" id="password" name="password" required)
+        
+        button.btn(type="submit") Sign In
+      
+      p Don't have an account? 
+        a(href="/register") Register here

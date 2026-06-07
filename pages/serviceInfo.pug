@@ -1,0 +1,160 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Service Info - Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+  body
+    include header.pug
+    div.content-wrapper
+      h2= service.name
+
+      //- Edit service info
+      div.service-edit
+        h3 Service Details
+        label Name:
+        input#edit-name(type="text" value=service.name)
+        label Service Fee: $
+        input#edit-fee(type="number" step="0.01" value=service.serviceFee)
+        label Minimum Order: $
+        input#edit-min(type="number" step="0.01" value=service.minOrder)
+        button#save-btn Save Changes
+
+      //- Add genre
+      div.genre-add
+        h3 Add Genre
+        input#new-genre(type="text" placeholder="Genre name")
+        button#add-genre-btn Add Genre
+
+      //- Add movie
+      div.movie-add
+        h3 Add Movie
+        label Genre:
+        select#movie-genre
+          each genre in Object.keys(service.genres)
+            option(value=genre)= genre
+        label Title:
+        input#movie-title(type="text" placeholder="Title")
+        label Description:
+        input#movie-desc(type="text" placeholder="Description")
+        label Year:
+        input#movie-year(type="number" placeholder="Year")
+        label Price: $
+        input#movie-price(type="number" step="0.01" placeholder="Price")
+        button#add-movie-btn Add Movie
+
+      //- Movies list grouped by genre
+      div#movies-section
+        each movies, genre in service.genres
+          h3= genre
+          if movies.length === 0
+            p No movies in this genre.
+          else
+            table.stats-table
+              thead
+                tr
+                  th ID
+                  th Title
+                  th Description
+                  th Year
+                  th Price
+                  th Remove
+              tbody
+                each movie in movies
+                  tr
+                    td= movie.id
+                    td= movie.title
+                    td= movie.description
+                    td= movie.year
+                    td $#{movie.price.toFixed(2)}
+                    td
+                      img.remove-movie(
+                        src="/images/remove.svg"
+                        width="16"
+                        style="cursor:pointer"
+                        data-mid=movie.id
+                      )
+
+    script.
+      const serviceId = !{service.id};
+
+      // Save service changes
+      document.getElementById("save-btn").addEventListener("click", () => {
+        const name = document.getElementById("edit-name").value.trim();
+        const serviceFee = document.getElementById("edit-fee").value;
+        const minOrder = document.getElementById("edit-min").value;
+        fetch(`/services/${serviceId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, serviceFee, minOrder })
+        })
+          .then(res => res.ok ? alert("Changes saved!") : alert("Failed to save changes."))
+          .catch(err => alert("Error: " + err));
+      });
+
+      // Add genre
+      document.getElementById("add-genre-btn").addEventListener("click", () => {
+        const genre = document.getElementById("new-genre").value.trim();
+        if (!genre) {
+          alert("Genre name must not be blank.");
+          return;
+        }
+        fetch(`/services/${serviceId}/genres`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ genre })
+        })
+          .then(res => {
+            if (res.ok) {
+              alert("Genre added!");
+              location.reload();
+            } else {
+              res.text().then(msg => alert("Error: " + msg));
+            }
+          });
+      });
+
+      // Add movie
+      document.getElementById("add-movie-btn").addEventListener("click", () => {
+        const genre = document.getElementById("movie-genre").value;
+        const title = document.getElementById("movie-title").value.trim();
+        const description = document.getElementById("movie-desc").value.trim();
+        const year = document.getElementById("movie-year").value.trim();
+        const price = document.getElementById("movie-price").value.trim();
+
+        if (!title || !description || !year || !price) {
+          alert("All movie fields must be filled in.");
+          return;
+        }
+
+        fetch(`/services/${serviceId}/movies`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ genre, movie: { title, description, year, price } })
+        })
+          .then(res => {
+            if (res.ok) {
+              alert("Movie added!");
+              location.reload();
+            } else {
+              res.text().then(msg => alert("Error: " + msg));
+            }
+          });
+      });
+
+      // Remove movie
+      document.querySelectorAll(".remove-movie").forEach(img => {
+        img.addEventListener("click", () => {
+          const mID = img.getAttribute("data-mid");
+          if (!confirm("Are you sure you want to delete this movie?")) return;
+          fetch(`/services/${serviceId}/movies/${mID}`, { method: "DELETE" })
+            .then(res => {
+              if (res.ok) {
+                alert("Movie deleted!");
+                location.reload();
+              } else {
+                res.text().then(msg => alert("Error: " + msg));
+              }
+            });
+        });
+      });

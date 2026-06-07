@@ -1,0 +1,49 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Users - Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+  body
+    include header.pug
+    div.content-wrapper
+      h2 User Directory
+
+      ul#users-list
+        each u in users
+          li(class=u.privacy ? 'private-user' : '')
+            if u.privacy
+              //- Private users are not clickable
+              span.private-label= u.username
+              span.privacy-badge  (Private)
+            else
+              //- Public users link to their profile
+              a(href=`/users/${u._id}`)= u.username
+            img.remove-icon(
+              src="/images/remove.svg"
+              width="16"
+              data-id=`${u._id}`
+              style="cursor:pointer; margin-left:10px;"
+            )
+
+    script.
+      function attachRemoveListener(img) {
+        img.addEventListener("click", () => {
+          const id = img.getAttribute("data-id");
+          if (!confirm("Are you sure you want to delete this user?")) return;
+          fetch(`/users/${id}`, { method: "DELETE" })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                alert("User deleted successfully!");
+                img.closest("li").remove();
+              } else {
+                alert("Failed to delete user.");
+              }
+            })
+            .catch(err => alert("Error deleting user: " + err));
+        });
+      }
+
+      // Attach remove listeners to all users on the page
+      document.querySelectorAll(".remove-icon").forEach(img => attachRemoveListener(img));

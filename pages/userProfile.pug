@@ -1,0 +1,113 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Profile - Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+    link(rel="stylesheet" href="/styles/stats.css")
+  body
+    include header.pug
+    div.stats-wrapper
+      h2 #{profileUser.username}'s Profile
+
+      //- Profile edit form
+      div.stats-card
+        h3 Account Details
+        div.form-group
+          label Username
+          input#edit-username(type="text" value=profileUser.username)
+        div.form-group
+          label Password
+          input#edit-password(type="password" placeholder="*****")
+        div.form-group
+          label Confirm Password
+          input#edit-confirm(type="password" placeholder="*****")
+        div.form-group
+          label Private Account
+          input#edit-privacy(type="checkbox" checked=profileUser.privacy)
+        button#save-btn.btn Save Changes
+
+      //- Order history table
+      div.stats-card
+        h3 Order History
+        if orders.length === 0
+          p No orders placed yet.
+        else
+          each order in orders
+            div.order-block
+              table.stats-table
+                tr
+                  td Order ID
+                  td= order._id
+                tr
+                  td Subtotal
+                  td $#{order.subtotal.toFixed(2)}
+                tr
+                  td Tax
+                  td $#{order.tax.toFixed(2)}
+                tr
+                  td Total
+                  td $#{order.total.toFixed(2)}
+                tr
+                  td Fees
+                  td
+                    each fee, serviceName in order.fees
+                      span #{serviceName}: $#{fee.toFixed(2)}  
+
+              //- Movies ordered grouped by service
+              each movieList, serviceName in order.movies
+                h4= serviceName
+                table.stats-table
+                  thead
+                    tr
+                      th ID
+                      th Title
+                      th Year
+                  tbody
+                    each movie in movieList
+                      tr
+                        td= movie.id
+                        td= movie.title
+                        td= movie.year
+
+              hr
+
+    script.
+      // Inject the profile user's MongoDB ID from the server into the client
+      const userId = '!{profileUser._id}';
+
+      // Send updated profile data to the server when Save Changes is clicked
+      document.getElementById('save-btn').addEventListener('click', () => {
+        // Read current values from all form fields
+        const username = document.getElementById('edit-username').value.trim();
+        const password = document.getElementById('edit-password').value;
+        const confirm = document.getElementById('edit-confirm').value;
+        const privacy = document.getElementById('edit-privacy').checked;
+
+        // Validate fields are not empty
+        if (!username || !password || !confirm) {
+          alert('All fields must be filled in.');
+          return;
+        }
+
+        // Validate passwords match
+        if (password !== confirm) {
+          alert('Passwords do not match.');
+          return;
+        }
+
+        // Send updated profile data to the server via PUT request
+        fetch(`/users/${userId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, privacy })
+        })
+          .then(res => {
+            if (res.ok) {
+              alert('Changes saved successfully!');
+            } else {
+              res.text().then(msg => alert('Error: ' + msg));
+            }
+          })
+          .catch(err => alert('Error: ' + err));
+      });

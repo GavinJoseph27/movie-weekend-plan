@@ -1,0 +1,57 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Weekend Movie Planner - Register
+    link(rel="stylesheet" href="/styles/Style.css")
+    link(rel="stylesheet" href="/styles/home.css")
+  body
+    include header.pug
+
+    div.welcome-section
+      h2 Create Account
+
+      if error
+        p.error-message= error
+
+      form(action="/register" method="POST" id="registerForm")
+        div.form-group
+          label(for="username") Username
+          input(type="text" id="username" name="username" required)
+
+        div.form-group
+          label(for="password") Password
+          input(type="password" id="password" name="password" required)
+
+        div.form-group
+          label(for="confirmPassword") Confirm Password
+          input(type="password" id="confirmPassword" name="confirmPassword" required)
+
+        div.form-group
+          label(for="privacy") Private Account
+          input(type="checkbox" id="privacy" name="privacy")
+
+        button.btn(type="submit") Register
+
+      p Already have an account?
+        a(href="/login") Sign in here
+
+    script.
+      document.getElementById('registerForm').addEventListener('submit', function(e) {
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Stop form submission if passwords don't match
+        if (password !== confirmPassword) {
+          e.preventDefault();
+          alert('Passwords do not match. Please try again.');
+          return;
+        }
+
+        // Stop form submission if either field is blank
+        if (!password || !confirmPassword) {
+          e.preventDefault();
+          alert('Please fill in all fields.');
+          return;
+        }
+      });

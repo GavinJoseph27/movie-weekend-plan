@@ -1,0 +1,45 @@
+/* Full-width banner image */
+.banner {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Centered welcome section with padding */
+.welcome-section {
+    text-align: center;
+    padding: 40px 20px;
+    color: white;
+}
+
+/* Welcome heading in gold */
+.welcome-section h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: gold;
+}
+
+/* Centered paragraph with max width */
+.welcome-section p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+/* Pill-shaped call-to-action button */
+.welcome-section a.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: purple;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+/* Button hover effect */
+.welcome-section a.btn:hover {
+    background-color: gold;
+    color: black;
+}

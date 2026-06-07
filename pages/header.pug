@@ -1,0 +1,29 @@
+//- Shared header included on every page
+header
+  div.logo
+    img(src="/images/logo.jpeg" width="50" alt="Weekend Movie Logo")
+    h1  "Movie Weekend" Planner 
+    img(src="/images/logo.jpeg" width="50" alt="Weekend Movie Logo")
+  nav
+    ul
+      li: a(href="/") Home
+      if user
+        li: a(href="/order") Order Form
+        li: a(href="/stats") Statistics
+        if user.admin
+          li: a(href="/users") Users
+          li: a(href="/services") Services
+        li: a(href="/users/" + user._id) Profile
+        li: a(href="/logout") Logout
+      else
+        li: a(href="/login") Login
+  //- Highlight the nav link matching the current page
+  script.
+    window.addEventListener("DOMContentLoaded", () => {
+      const currentPath = window.location.pathname;
+      document.querySelectorAll("header nav a").forEach(link => {
+        if (link.getAttribute("href") === currentPath) {
+          link.classList.add("active");
+        }
+      });
+    });

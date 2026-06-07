@@ -1,0 +1,30 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Statistics - Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+    link(rel="stylesheet" href="/styles/stats.css")
+  body
+    include header.pug
+    div.stats-wrapper
+      h2 Statistics
+      //- Loop through each service and render a stats card
+      div#stats-container
+        each service in stats
+          div.stats-card
+            h3= service.name
+            //- Table showing key stats for this service
+            table.stats-table
+              tr
+                td Total Movies Ordered
+                td= service.totalMovies
+              tr
+                td Total Sales Revenue
+                td $#{service.totalRevenue}
+              tr
+                td Average Order Cost
+                td $#{service.avgCost}
+              tr
+                td Most Ordered Movie
+                td= service.topMovie

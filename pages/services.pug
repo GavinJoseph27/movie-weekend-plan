@@ -1,0 +1,76 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    title Admin - Weekend Movie Planner
+    link(rel="stylesheet" href="/styles/Style.css")
+  body
+    include header.pug
+    div.content-wrapper
+      h2 Streaming Services
+      //- List of all streaming services with remove buttons
+      ul#services-list
+        each service in services
+          li
+            a(href=`/services/${service.id}`)= service.name
+            img.remove-icon(src="/images/remove.svg" width="16" data-id=service.id style="cursor:pointer; margin-left:10px;")
+      //- Input field and button to add a new service
+      div.form-row
+        input#new-service-name(type="text" placeholder="Service name")
+        button#add-service-btn Add Service
+    script.
+      // Send POST request to add a new service
+      document.getElementById("add-service-btn").addEventListener("click", () => {
+        const name = document.getElementById("new-service-name").value.trim();
+        // Validate name is not blank before sending
+        if (!name) {
+          alert("Service name must not be blank.");
+          return;
+        }
+        fetch("/services", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("Service added successfully!");
+              // Add to list without full page reload
+              const li = document.createElement("li");
+              li.innerHTML = `
+                <a href="/services/${data.service.id}">${data.service.name}</a>
+                <img src="/images/remove.svg" width="16" data-id="${data.service.id}" 
+                     style="cursor:pointer; margin-left:10px;" class="remove-icon">
+              `;
+              document.getElementById("services-list").appendChild(li);
+              document.getElementById("new-service-name").value = "";
+              attachRemoveListener(li.querySelector(".remove-icon"));
+            }
+          })
+          .catch(err => alert("Error adding service: " + err));
+      });
+
+      // Attach delete listener to a single remove icon
+      function attachRemoveListener(img) {
+        img.addEventListener("click", () => {
+          const id = img.getAttribute("data-id");
+          // Confirm before deleting
+          if (!confirm("Are you sure you want to delete this service?")) return;
+          fetch(`/services/${id}`, { method: "DELETE" })
+            .then(res => res.json())
+            .then(data => {
+              if (data.success) {
+                alert("Service deleted successfully!");
+                // Remove service from list immediately
+                img.closest("li").remove();
+              } else {
+                alert("Failed to delete service.");
+              }
+            })
+            .catch(err => alert("Error deleting service: " + err));
+        });
+      }
+
+      // Attach remove listeners to all services already on the page
+      document.querySelectorAll(".remove-icon").forEach(img => attachRemoveListener(img));

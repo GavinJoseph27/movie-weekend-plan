@@ -1,0 +1,20 @@
+{
+  "name": "101348882-comp2406-a2",
+  "version": "1.0.0",
+  "description": "COMP 2406 A – Assignment 2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongodb": "^7.1.1",
+    "pug": "^3.0.4"
+  }
+}
