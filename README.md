@@ -54,7 +54,7 @@ node server.js
 http://localhost:3000
 
 ### Project Structure
-
+```
 movie-weekend-planner/
 ├── server.js                 # Main Express server (routes, auth, logic)
 ├── mwpDB.js                  # MongoDB connection helper
@@ -78,6 +78,7 @@ movie-weekend-planner/
 │   └── stats.css
 ├── streamingServices/        # JSON seed data for services
 └── images/                   # Static assets
+```
 
 ## How It Works
 
