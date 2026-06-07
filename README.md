@@ -36,15 +36,18 @@ A full-stack web application that allows users to browse movies across multiple 
 ```bash
 git clone https://github.com/GavinJoseph27/movie-weekend-planner.git
 cd movie-weekend-planner
-npm install```
+npm install
+```
 
 ### Initialize Database
 
 ```bash
-node initializeDatabase.js```
+node initializeDatabase.js
+```
 
 ```bash
-node server.js```
+node server.js
+```
 
 ### Open the Application
 
